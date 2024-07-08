@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL Winning Team Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        label, select, button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #result {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>IPL Winning Team Prediction</h1>
+        <form id="predictionForm">
+            <label for="team1">Team 1:</label>
+            <select id="team1" name="team1">
+                <option value="TeamA">TeamA</option>
+                <option value="TeamB">TeamB</option>
+                <option value="TeamC">TeamC</option>
+            </select>
+
+            <label for="team2">Team 2:</label>
+            <select id="team2" name="team2">
+                <option value="TeamA">TeamA</option>
+                <option value="TeamB">TeamB</option>
+                <option value="TeamC">TeamC</option>
+            </select>
+
+            <label for="venue">Venue:</label>
+            <select id="venue" name="venue">
+                <option value="Stadium1">Stadium1</option>
+                <option value="Stadium2">Stadium2</option>
+            </select>
+
+            <button type="button" onclick="predictWinner()">Predict Winner</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function predictWinner() {
+            const formData = new FormData(document.getElementById('predictionForm'));
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = `Predicted Winner: ${data.winner}`;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
